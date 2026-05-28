@@ -1,0 +1,1298 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="TOEIC 6日">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23ffffff'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' dominant-baseline='middle' font-family='-apple-system,sans-serif' font-size='52' font-weight='600' fill='%231a1a1a'%3E6%3C/text%3E%3Ctext x='50%25' y='75%25' text-anchor='middle' font-family='-apple-system,sans-serif' font-size='18' fill='%23e85a4f'%3ESPRINT%3C/text%3E%3C/svg%3E">
+<title>TOEIC 6日間スプリント・700点突破</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --ink:#1a1a1a; --ink-2:#444; --muted:#888;
+  --line:#ececec; --line-2:#f5f5f5;
+  --soft-blue:#dbe9f4; --soft-blue-2:#b8d4e3;
+  --soft-green:#dcecd8; --soft-green-2:#9fc99a;
+  --soft-pink:#fbe0db; --soft-orange:#fce4cc;
+  --accent-red:#e85a4f; --accent-red-soft:#fde4e2;
+  --r:14px; --r-sm:8px; --r-pill:999px;
+  --shadow:0 1px 0 rgba(0,0,0,.02), 0 8px 24px -16px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Inter","Noto Sans JP","-apple-system",sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
+body{min-height:100dvh;padding-bottom:env(safe-area-inset-bottom)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;letter-spacing:inherit}
+.app{max-width:680px;margin:0 auto;padding:18px 16px 80px}
+
+/* ===== Tab Nav ===== */
+.tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:10;padding-top:8px}
+.tabs button{flex:1;padding:10px 8px;font-size:12px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--accent-red)}
+.tabs button .badge{display:inline-block;background:var(--accent-red);color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;margin-left:4px;font-weight:600}
+
+/* ===== Header ===== */
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.brand h1{font-weight:600;font-size:18px;margin:0;letter-spacing:-.02em}
+.brand h1 .accent{color:var(--accent-red);font-weight:700}
+.brand .sub{font-size:11px;color:var(--muted);font-weight:400;letter-spacing:.04em;margin-top:2px;display:block}
+.brand .tag{font-size:10.5px;letter-spacing:.1em;color:var(--ink-2);border:1px solid var(--line);padding:4px 10px;border-radius:var(--r-pill);background:var(--line-2);font-weight:500;white-space:nowrap}
+
+/* ===== Roadmap Day Cards ===== */
+.day-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;position:relative;overflow:hidden}
+.day-card.today{border-color:var(--accent-red);border-width:2px;background:linear-gradient(180deg,var(--accent-red-soft) 0%,#fff 40%)}
+.day-card.done{opacity:.6;background:var(--line-2)}
+.day-card .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.day-card .head h3{font-size:14px;font-weight:600;margin:0;letter-spacing:-.01em}
+.day-card .head h3 b{color:var(--accent-red);font-weight:700;font-size:18px;margin-right:8px}
+.day-card .head .status{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:500}
+.day-card .status.now{color:var(--accent-red);font-weight:600}
+.day-card .theme{font-size:13px;color:var(--ink-2);margin-bottom:10px;font-weight:500}
+.day-card .tasks{display:flex;flex-direction:column;gap:6px}
+.task{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:6px;background:var(--line-2);font-size:12px;line-height:1.5;cursor:pointer;transition:background .15s}
+.task:active{background:var(--line)}
+.task.done{opacity:.5;text-decoration:line-through}
+.task .check{flex-shrink:0;width:18px;height:18px;border:1.5px solid var(--line-2);background:#fff;border:1.5px solid #ccc;border-radius:4px;display:flex;align-items:center;justify-content:center;color:transparent;font-weight:700;font-size:13px}
+.task.done .check{background:var(--soft-green-2);border-color:var(--soft-green-2);color:#fff}
+.task .body{flex:1}
+.task .time{font-size:10px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.task .desc{color:var(--ink)}
+.task .desc b{font-weight:600;color:var(--accent-red)}
+.task-action{display:inline-block;margin-top:4px;font-size:11px;color:var(--ink-2);background:#fff;padding:3px 8px;border-radius:var(--r-pill);border:1px solid var(--line);font-weight:500}
+
+/* ===== Progress Bar ===== */
+.progress-wrap{background:var(--line-2);border-radius:var(--r);padding:12px 14px;margin-bottom:14px}
+.progress-wrap .label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px;letter-spacing:.04em}
+.progress-wrap .label b{color:var(--accent-red);font-weight:600}
+.progress-bar{height:6px;background:#fff;border-radius:3px;overflow:hidden;border:1px solid var(--line)}
+.progress-bar .fill{height:100%;background:var(--accent-red);border-radius:3px;transition:width .3s}
+
+/* ===== Hero Today ===== */
+.hero{background:var(--ink);color:#fff;border-radius:var(--r);padding:16px 18px;margin-bottom:14px}
+.hero .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.hero .top .day{font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.7}
+.hero .top .progress{font-size:11px;opacity:.7}
+.hero h2{font-size:22px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em}
+.hero h2 .num{color:var(--accent-red)}
+.hero .theme{font-size:13px;opacity:.85}
+.hero .actions{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.hero .actions button{flex:1;min-width:90px;background:#fff;color:var(--ink);padding:9px 8px;border-radius:var(--r-sm);font-size:12px;font-weight:600;letter-spacing:-.01em;border:0}
+.hero .actions button:active{background:var(--line-2)}
+.hero .actions button.primary{background:var(--accent-red);color:#fff}
+
+/* ===== Card ===== */
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px 18px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h3{font-size:14px;font-weight:600;margin:0 0 12px;letter-spacing:-.01em}
+
+/* ===== Vocab section ===== */
+.vocab-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);margin-bottom:14px;letter-spacing:.06em}
+.vocab-meta .qno{font-variant-numeric:tabular-nums;font-weight:500}
+.vocab-meta .streak{display:flex;gap:4px;align-items:center}
+.vocab-meta .streak .pip{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.vocab-meta .streak .pip.on{background:var(--soft-green-2)}
+.vocab-meta .streak .label{font-size:10px;margin-right:4px;text-transform:uppercase}
+.vocab-meta .timer{font-variant-numeric:tabular-nums;font-weight:500;font-size:12px}
+.vocab-meta .timer.warn{color:var(--accent-red)}
+
+.wordwrap{text-align:center;padding:8px 6px 12px;margin-bottom:14px}
+.word-line{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.bookmark{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--line);border-radius:50%;color:#ccc;background:#fff;flex-shrink:0}
+.bookmark.on{color:#fff;background:var(--accent-red);border-color:var(--accent-red)}
+.bookmark svg{width:15px;height:15px}
+.word{font-weight:600;font-size:clamp(32px,8vw,46px);line-height:1.05;letter-spacing:-.025em;word-break:break-word}
+.wordrow{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:8px}
+.pos{font-size:13px;color:var(--muted);font-weight:400;font-style:italic}
+.speak{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--line);border-radius:50%;color:var(--ink-2);background:#fff}
+.speak:active{background:var(--soft-blue);color:var(--ink)}
+.speak svg{width:15px;height:15px}
+
+.prompt{text-align:center;font-size:11px;color:var(--muted);margin-bottom:12px;letter-spacing:.06em;font-weight:500}
+
+.choices{display:grid;gap:7px}
+.choice{display:flex;align-items:flex-start;gap:10px;text-align:left;padding:13px 14px;background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);color:var(--ink);font-size:14px;line-height:1.45;font-weight:400}
+.choice:active{transform:scale(.99)}
+.choice .idx{font-weight:600;color:var(--muted);min-width:18px}
+.choice.correct{background:var(--soft-green);border-color:var(--soft-green-2);color:#1f3d1d}
+.choice.correct .idx{color:var(--soft-green-2)}
+.choice.wrong{background:var(--accent-red-soft);border-color:var(--accent-red);color:#5a1a14}
+.choice.wrong .idx{color:var(--accent-red)}
+.choice:disabled{cursor:default}
+
+/* ===== Result ===== */
+.result{margin-top:14px;display:none}
+.result.show{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+.verdict{padding:10px 14px;border-radius:var(--r-sm);font-size:14px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.verdict.ok{background:var(--soft-green);color:#1f3d1d}
+.verdict.ng{background:var(--accent-red-soft);color:var(--accent-red)}
+.verdict .meaning{font-size:12px;font-weight:500;color:inherit}
+.verdict.ng .meaning{color:#5a1a14}
+
+.streak-bar{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--line-2);border-radius:var(--r-sm);margin-bottom:10px;font-size:12px;color:var(--ink-2)}
+.streak-bar .lbl{font-weight:500;flex-shrink:0;font-size:11px}
+.streak-bar .pips{display:flex;gap:4px}
+.streak-bar .pip{width:16px;height:5px;border-radius:3px;background:var(--line)}
+.streak-bar .pip.on{background:var(--soft-green-2)}
+.streak-bar .msg{margin-left:auto;font-size:11px;color:var(--muted)}
+.streak-bar .msg.grad{color:var(--accent-red);font-weight:600}
+
+.section{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:11px 13px}
+.section h4{margin:0 0 6px;font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;font-weight:600}
+
+.exline{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+.exline:last-child{border-bottom:0}
+.exline .miniplay{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:1px solid var(--line);border-radius:50%;color:var(--ink-2);flex-shrink:0;margin-top:2px;background:#fff}
+.exline .miniplay svg{width:8px;height:8px}
+.exline .body{flex:1;min-width:0}
+.exline .en{font-size:13.5px;line-height:1.5;margin-bottom:2px}
+.exline .ja{font-size:11.5px;color:var(--muted);line-height:1.5}
+
+.kv{display:flex;gap:8px;font-size:12px;line-height:1.55;margin:4px 0;color:var(--ink-2)}
+.kv .k{font-size:10px;letter-spacing:.08em;color:var(--muted);min-width:54px;text-transform:uppercase;font-weight:600;padding-top:2px}
+.kv .v{flex:1}
+.kv .v em{font-style:normal;color:var(--ink);font-weight:500;background:var(--soft-blue);padding:1px 4px;border-radius:3px;font-size:11.5px}
+
+.note-box{font-size:12px;color:var(--ink-2);background:var(--soft-blue);padding:9px 11px;border-radius:6px;line-height:1.55}
+
+.tapnext{text-align:center;font-size:10px;color:var(--muted);margin-top:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;animation:pulse 1.8s infinite ease-in-out}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+
+/* ===== Grammar Part5 ===== */
+.q5{padding:8px 4px 4px}
+.q5 .qno-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);margin-bottom:14px;letter-spacing:.05em}
+.q5 .qno-row .timer{font-variant-numeric:tabular-nums;font-weight:500;font-size:12px}
+.q5 .qno-row .timer.warn{color:var(--accent-red)}
+.q5 .sentence{font-size:16px;line-height:1.7;margin-bottom:18px;color:var(--ink);font-weight:400}
+.q5 .blank{display:inline-block;min-width:60px;border-bottom:2px solid var(--ink);text-align:center;padding:0 6px;color:var(--accent-red);font-weight:600}
+.q5 .blank.filled{color:var(--ink)}
+.q5 .options{display:grid;gap:7px}
+.q5 .opt{display:flex;align-items:center;gap:10px;padding:13px 14px;background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);font-size:14px;text-align:left}
+.q5 .opt .idx{font-weight:600;color:var(--muted);min-width:20px}
+.q5 .opt.correct{background:var(--soft-green);border-color:var(--soft-green-2);color:#1f3d1d}
+.q5 .opt.wrong{background:var(--accent-red-soft);border-color:var(--accent-red);color:#5a1a14}
+.q5 .explain{margin-top:14px;padding:14px;background:var(--soft-blue);border-radius:var(--r-sm);font-size:13px;line-height:1.65;display:none}
+.q5 .explain.show{display:block;animation:fadeIn .25s ease}
+.q5 .explain b{color:var(--accent-red);font-weight:600}
+.q5 .explain .label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+.q5 .nav{display:flex;justify-content:space-between;gap:8px;margin-top:14px}
+.q5 .nav button{flex:1;padding:11px;border-radius:var(--r-sm);font-size:13px;font-weight:500;background:#fff;border:1px solid var(--line);color:var(--ink-2)}
+.q5 .nav button.next{background:var(--ink);color:#fff;border-color:var(--ink)}
+.q5 .nav button:disabled{opacity:.4}
+
+.q5-score{display:flex;justify-content:center;gap:18px;padding:12px;background:var(--line-2);border-radius:var(--r-sm);margin-bottom:14px;font-size:12px}
+.q5-score .item{text-align:center}
+.q5-score .v{font-size:18px;font-weight:600;color:var(--ink);line-height:1}
+.q5-score .v.red{color:var(--accent-red)}
+.q5-score .v.green{color:var(--soft-green-2)}
+.q5-score .l{font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em}
+
+/* ===== Listening section ===== */
+.listen-card{padding:20px 4px}
+.listen-control{display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 16px;background:var(--soft-blue);border-radius:var(--r);margin-bottom:14px}
+.listen-control .play-big{width:64px;height:64px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center}
+.listen-control .play-big svg{width:24px;height:24px}
+.listen-control .label{font-size:12px;color:var(--ink-2);text-align:center;line-height:1.5}
+.listen-control .label b{color:var(--accent-red);font-weight:600}
+.listen-replay{display:inline-block;font-size:11px;color:var(--ink-2);background:#fff;padding:5px 12px;border-radius:var(--r-pill);border:1px solid var(--line);font-weight:500}
+.script-toggle{text-align:center;margin-top:8px}
+.script-toggle button{font-size:11px;color:var(--muted);text-decoration:underline;background:none;border:0}
+.script{padding:12px 14px;background:var(--line-2);border-radius:var(--r-sm);font-size:13px;line-height:1.6;margin-top:8px;display:none}
+.script.show{display:block}
+.script .en{font-style:italic;color:var(--ink);margin-bottom:6px}
+.script .ja{font-size:12px;color:var(--muted)}
+
+/* ===== Voice info ===== */
+.voice-info{font-size:10px;color:var(--muted);margin-top:8px;text-align:center;letter-spacing:.04em;line-height:1.4}
+.voice-info b{color:var(--ink-2);font-weight:500}
+
+/* ===== Settings ===== */
+.settings{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 13px;background:var(--line-2);border-radius:var(--r-sm);margin-bottom:14px;font-size:12px;color:var(--muted)}
+.settings .left{display:flex;align-items:center;gap:12px}
+.settings .toggle{display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none}
+.settings .toggle .sw{display:inline-block;width:28px;height:16px;background:#d8d8d8;border-radius:99px;position:relative}
+.settings .toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:left .2s}
+.settings .toggle input{display:none}
+.settings .toggle input:checked + .sw{background:var(--soft-green-2)}
+.settings .toggle input:checked + .sw::after{left:14px}
+.settings select{font:inherit;background:#fff;border:1px solid var(--line);border-radius:5px;padding:2px 6px;font-size:11px;color:var(--ink)}
+.settings .reset{font-size:11px;color:var(--accent-red);border:1px solid var(--accent-red-soft);padding:3px 8px;border-radius:var(--r-pill);background:#fff;font-weight:500}
+
+.empty{text-align:center;padding:30px 16px;color:var(--muted)}
+.empty h2{font-size:20px;font-weight:600;color:var(--ink);margin:0 0 6px}
+.empty p{font-size:13px;line-height:1.6;margin:4px 0}
+
+/* Primer */
+.primer{position:fixed;inset:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);z-index:99;display:flex;align-items:center;justify-content:center;padding:20px}
+.primer .box{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px 22px;max-width:340px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.1)}
+.primer h2{font-size:22px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em}
+.primer h2 .accent{color:var(--accent-red)}
+.primer .sub{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.primer p{font-size:13px;line-height:1.65;color:var(--ink-2);margin:12px 0 6px}
+.primer .plan{text-align:left;background:var(--soft-blue);padding:11px 13px;border-radius:var(--r-sm);margin:12px 0;font-size:12px;line-height:1.65;color:var(--ink-2)}
+.primer .plan b{color:var(--accent-red);font-weight:600}
+.primer .warn{font-size:11px;color:var(--muted);margin-top:12px;padding-top:10px;border-top:1px solid var(--line);line-height:1.5}
+.primer .warn b{color:var(--accent-red)}
+.primer button{margin-top:14px;padding:12px 28px;background:var(--ink);color:#fff;border-radius:var(--r-sm);font-size:14px;font-weight:500;width:100%}
+.hidden{display:none !important}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="tabs">
+    <button data-tab="roadmap" class="on">📅 6日間</button>
+    <button data-tab="vocab">📚 単語</button>
+    <button data-tab="grammar">📝 文法</button>
+    <button data-tab="listen">🎧 リスニング</button>
+  </div>
+
+  <!-- ===== ROADMAP TAB ===== -->
+  <section id="tab-roadmap">
+    <header class="brand">
+      <div>
+        <h1>TOEIC <span class="accent">6日間</span>スプリント</h1>
+        <span class="sub">700点突破・直前特化</span>
+      </div>
+      <span class="tag">SPRINT</span>
+    </header>
+
+    <div class="progress-wrap">
+      <div class="label"><span>全体進捗</span><b id="overall-pct">0%</b></div>
+      <div class="progress-bar"><div class="fill" id="overall-fill" style="width:0%"></div></div>
+    </div>
+
+    <div class="hero">
+      <div class="top">
+        <span class="day" id="hero-day">Day 1</span>
+        <span class="progress" id="hero-prog">0/3 完了</span>
+      </div>
+      <h2 id="hero-title">現状把握 <span class="num">D1</span></h2>
+      <div class="theme" id="hero-theme">弱点カテゴリを特定する1日</div>
+      <div class="actions">
+        <button onclick="switchTab('vocab')">📚 単語</button>
+        <button class="primary" onclick="switchTab('grammar')">📝 文法演習</button>
+        <button onclick="switchTab('listen')">🎧 リスニング</button>
+      </div>
+    </div>
+
+    <div id="day-list"></div>
+  </section>
+
+  <!-- ===== VOCAB TAB ===== -->
+  <section id="tab-vocab" class="hidden">
+    <div class="settings">
+      <div class="left">
+        <label class="toggle"><input type="checkbox" id="voice" checked><span class="sw"></span><span>音声</span></label>
+        <select id="rate">
+          <option value="0.8">ゆっくり</option>
+          <option value="0.9" selected>標準</option>
+          <option value="1.1">速め</option>
+        </select>
+      </div>
+      <button class="reset" id="reset-vocab">リセット</button>
+    </div>
+    <div class="voice-info" id="voice-info">音声を読み込み中…</div>
+
+    <div class="card" id="vocab-card">
+      <div class="vocab-meta">
+        <span class="qno" id="vocab-qno">— / —</span>
+        <span class="streak">
+          <span class="label">streak</span>
+          <span class="pip" id="pip-0"></span>
+          <span class="pip" id="pip-1"></span>
+          <span class="pip" id="pip-2"></span>
+        </span>
+        <span class="timer" id="vocab-timer">0s</span>
+      </div>
+      <div class="wordwrap">
+        <div class="word-line">
+          <button class="bookmark hidden" id="bookmark" aria-label="しおり">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2v16z"/></svg>
+          </button>
+          <div class="word" id="word">loading…</div>
+        </div>
+        <div class="wordrow">
+          <span class="pos" id="pos"></span>
+          <button class="speak" id="replay" aria-label="発音">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="prompt">日本語の意味を選んでください</div>
+      <div class="choices" id="choices"></div>
+      <div class="result" id="result">
+        <div class="verdict" id="verdict"><span id="verdict-text"></span><span class="meaning" id="verdict-meaning"></span></div>
+        <div class="streak-bar"><span class="lbl">習熟度</span><span class="pips"><span class="pip" id="sp-0"></span><span class="pip" id="sp-1"></span><span class="pip" id="sp-2"></span></span><span class="msg" id="streak-msg"></span></div>
+        <div class="section"><h4>例文</h4><div id="ex-list"></div></div>
+        <div class="section"><h4>類義・用法</h4>
+          <div class="kv"><span class="k">類義</span><span class="v" id="r-syn"></span></div>
+          <div class="kv"><span class="k">用法</span><span class="v" id="r-col"></span></div>
+        </div>
+        <div class="section"><h4>ノート</h4><div class="note-box" id="r-note"></div></div>
+        <div class="tapnext">タップで次へ</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GRAMMAR TAB ===== -->
+  <section id="tab-grammar" class="hidden">
+    <div class="q5-score">
+      <div class="item"><div class="v" id="g-total">0</div><div class="l">解いた</div></div>
+      <div class="item"><div class="v green" id="g-correct">0</div><div class="l">正解</div></div>
+      <div class="item"><div class="v" id="g-acc">—</div><div class="l">正答率</div></div>
+      <div class="item"><div class="v red" id="g-weak">0</div><div class="l">弱点</div></div>
+    </div>
+
+    <div class="card">
+      <div class="q5" id="q5-area">
+        <div class="qno-row">
+          <span id="q5-no">Q 1 / 30</span>
+          <span class="timer" id="q5-timer">0s</span>
+        </div>
+        <div class="sentence" id="q5-sentence">loading…</div>
+        <div class="options" id="q5-opts"></div>
+        <div class="explain" id="q5-explain">
+          <div class="label">解説</div>
+          <div id="q5-explain-body"></div>
+        </div>
+        <div class="nav">
+          <button id="q5-prev">前へ</button>
+          <button class="next" id="q5-next">次へ</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LISTEN TAB ===== -->
+  <section id="tab-listen" class="hidden">
+    <div class="q5-score">
+      <div class="item"><div class="v" id="l-total">0</div><div class="l">解いた</div></div>
+      <div class="item"><div class="v green" id="l-correct">0</div><div class="l">正解</div></div>
+      <div class="item"><div class="v" id="l-acc">—</div><div class="l">正答率</div></div>
+    </div>
+
+    <div class="card">
+      <div class="listen-card">
+        <div class="qno-row" style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:14px">
+          <span id="l-no">Q 1 / 20</span>
+          <span id="l-type">Part 2 短い応答</span>
+        </div>
+
+        <div class="listen-control">
+          <button class="play-big" id="l-play">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
+          <div class="label">タップして<b>質問を再生</b><br><small style="color:var(--muted)">3つの応答が読み上げられます</small></div>
+          <button class="listen-replay" id="l-replay">🔄 もう一度</button>
+        </div>
+
+        <div class="prompt" style="margin:14px 0 10px">最も適切な応答を選んでください</div>
+        <div class="choices" id="l-choices"></div>
+
+        <div class="result" id="l-result">
+          <div class="verdict" id="l-verdict"><span id="l-verdict-text"></span></div>
+          <div class="script-toggle">
+            <button id="l-script-btn">📜 スクリプトを表示</button>
+          </div>
+          <div class="script" id="l-script"></div>
+          <div class="section" style="margin-top:10px"><h4>解説</h4><div class="note-box" id="l-explain"></div></div>
+          <div class="tapnext">タップで次へ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="primer" id="primer">
+  <div class="box">
+    <span class="sub">TOEIC 6-DAY SPRINT</span>
+    <h2>700 <span class="accent">Foundation</span></h2>
+    <p>6日間で700点突破に必要な3要素を集中強化します。</p>
+    <div class="plan">
+      <b>毎日のメニュー（1時間）：</b><br>
+      ・朝15分：単語アプリ<br>
+      ・昼30分：文法演習（Part5模擬）<br>
+      ・夜15分：リスニング（Part2形式）<br>
+      <br>
+      <b>朝・昼・夜にこなすと、その日のタスクが完了します。</b>
+    </div>
+    <p class="warn">⚠ iPhoneの方は本体のサイレントスイッチを <b>解除</b> し、音量を上げてからタップしてください。</p>
+    <button id="startBtn">スプリント開始</button>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   TOEIC 6日間スプリント アプリ
+   - ロードマップ（6日間の進捗管理）
+   - 単語学習（既存ロジック流用、6日に圧縮）
+   - Part5 文法問題演習（30問、自作）
+   - Part2 リスニング演習（Web Speech APIで音声生成）
+   ===================================================================== */
+
+/* ========== ロードマップ定義 ========== */
+const ROADMAP = [
+  {day:1, title:"現状把握", theme:"弱点カテゴリを特定する1日",
+   tasks:[
+    {time:"朝 15分", desc:"単語アプリで <b>Day1の語</b> を回す", type:"vocab"},
+    {time:"昼 30分", desc:"<b>Part5 模擬問題 Q1-10</b> を解く", type:"grammar"},
+    {time:"夜 15分", desc:"リスニング <b>Q1-4</b> + 弱点メモ", type:"listen"}
+  ]},
+  {day:2, title:"Part5・6 強化", theme:"文法ポイントを叩き込む",
+   tasks:[
+    {time:"朝 15分", desc:"単語アプリで <b>Day2の語</b> + 弱点復習", type:"vocab"},
+    {time:"昼 30分", desc:"<b>Part5 Q11-20</b> を解く", type:"grammar"},
+    {time:"夜 15分", desc:"リスニング <b>Q5-8</b>", type:"listen"}
+  ]},
+  {day:3, title:"リスニング基礎", theme:"Part1・2 の音に慣れる",
+   tasks:[
+    {time:"朝 15分", desc:"単語アプリで <b>Day3の語</b>", type:"vocab"},
+    {time:"昼 30分", desc:"<b>Part5 Q21-30</b> 総まとめ", type:"grammar"},
+    {time:"夜 15分", desc:"リスニング <b>Q9-12</b> + 同音源リプレイ", type:"listen"}
+  ]},
+  {day:4, title:"リスニング応用", theme:"Part3・4 の先読み習慣",
+   tasks:[
+    {time:"朝 15分", desc:"単語アプリで <b>弱点語復習</b>", type:"vocab"},
+    {time:"昼 30分", desc:"<b>Part5 を全問再挑戦</b>", type:"grammar"},
+    {time:"夜 15分", desc:"リスニング <b>Q13-16</b>", type:"listen"}
+  ]},
+  {day:5, title:"Part7 速読練習", theme:"1問1分の感覚を養う",
+   tasks:[
+    {time:"朝 15分", desc:"単語アプリで <b>全体復習</b>", type:"vocab"},
+    {time:"昼 30分", desc:"公式問題集Part7（手元の本）+ <b>Part5苦手のみ再挑戦</b>", type:"grammar"},
+    {time:"夜 15分", desc:"リスニング <b>Q17-20</b>", type:"listen"}
+  ]},
+  {day:6, title:"総仕上げ", theme:"明日の試験に備える",
+   tasks:[
+    {time:"朝 15分", desc:"単語アプリで <b>卒業語をざっと眺める</b>", type:"vocab"},
+    {time:"昼 30分", desc:"公式問題集Part5・7（手元の本）+ <b>本アプリPart5全問</b>", type:"grammar"},
+    {time:"夜 15分", desc:"<b>持ち物確認・早く寝る</b>", type:"listen"}
+  ]}
+];
+
+/* ========== 単語データ（700点中級語、6日×10語=60語に圧縮） ========== */
+const VOCAB = {
+1:[
+ {w:"oversee",p:"v.",j:"監督する",d:["見落とす","欠勤する","引退する"],
+  ex:[{e:"She oversees the marketing team.",t:"彼女はマーケティングチームを統括しています。"},{e:"He oversees all production activities.",t:"彼は全生産活動を監督します。"}],
+  syn:"supervise, manage",col:"oversee <em>operations</em>",n:"overlookは「見落とす」で逆。"},
+ {w:"implement",p:"v.",j:"実施する",d:["延期する","調査する","削減する"],
+  ex:[{e:"We will implement the new policy.",t:"新方針を実施します。"},{e:"The system has been implemented.",t:"システムは導入されました。"}],
+  syn:"execute, carry out",col:"implement <em>a plan</em>",n:"名詞 implementation も頻出。"},
+ {w:"allocate",p:"v.",j:"割り当てる",d:["削減する","延期する","破棄する"],
+  ex:[{e:"We allocated $50,000 for the project.",t:"プロジェクトに5万ドルを割り当てました。"},{e:"Resources will be allocated by priority.",t:"資源は優先度で配分されます。"}],
+  syn:"assign, distribute",col:"allocate <em>funds</em>",n:"allocation も同頻度で出る。"},
+ {w:"facilitate",p:"v.",j:"促進する",d:["妨害する","延期する","破棄する"],
+  ex:[{e:"This tool facilitates communication.",t:"このツールは連絡を円滑にします。"},{e:"She facilitated the meeting.",t:"彼女は会議を取り持ちました。"}],
+  syn:"ease, enable",col:"facilitate <em>communication</em>",n:"facility と同語源。"},
+ {w:"prioritize",p:"v.",j:"優先する",d:["軽視する","延期する","二重化する"],
+  ex:[{e:"We need to prioritize customer satisfaction.",t:"顧客満足を優先する必要があります。"},{e:"Please prioritize your tasks.",t:"タスクの優先順位をつけてください。"}],
+  syn:"rank, put first",col:"prioritize <em>safety</em>",n:"top priority とセットで。"},
+ {w:"comprehensive",p:"adj.",j:"包括的な",d:["部分的な","限定的な","簡略な"],
+  ex:[{e:"We offer a comprehensive plan.",t:"包括的なプランを提供します。"},{e:"The report provides a comprehensive analysis.",t:"その報告書は総合的分析を提供します。"}],
+  syn:"thorough, complete",col:"comprehensive <em>plan</em>",n:"Part5の形容詞問題で頻出。"},
+ {w:"substantial",p:"adj.",j:"相当な",d:["わずかな","架空の","表面的な"],
+  ex:[{e:"The company made a substantial profit.",t:"会社は相当な利益を上げました。"},{e:"There has been a substantial increase.",t:"相当な伸びがありました。"}],
+  syn:"considerable, significant",col:"substantial <em>increase</em>",n:"数量・金額の「相当な」で頻出。"},
+ {w:"sufficient",p:"adj.",j:"十分な",d:["不十分な","過剰な","余分な"],
+  ex:[{e:"We have sufficient funds.",t:"十分な資金があります。"},{e:"Allow sufficient time.",t:"十分な時間を見込んでください。"}],
+  syn:"adequate, enough",col:"sufficient <em>funds</em>",n:"enough より formal。"},
+ {w:"initiative",p:"n.",j:"取り組み、主導権",d:["契約","報告","予算"],
+  ex:[{e:"We launched a green initiative.",t:"環境に配慮した取り組みを開始しました。"},{e:"She showed great initiative.",t:"彼女は大きな主導権を発揮しました。"}],
+  syn:"plan, leadership",col:"<em>take the initiative</em>",n:"take the initiative で頻出。"},
+ {w:"insight",p:"n.",j:"洞察",d:["推測","結論","表面"],
+  ex:[{e:"The report provides valuable insights.",t:"その報告書は貴重な洞察を提供します。"},{e:"She has deep insight into customers.",t:"彼女は顧客に深い洞察があります。"}],
+  syn:"understanding, perception",col:"<em>valuable</em> insight",n:"insightful も派生。"}
+],
+2:[
+ {w:"evaluate",p:"v.",j:"評価する",d:["無視する","承認する","破壊する"],
+  ex:[{e:"We evaluate employees every 6 months.",t:"社員を半年ごとに評価します。"},{e:"The results will be evaluated.",t:"結果は評価されます。"}],
+  syn:"assess, appraise",col:"evaluate <em>performance</em>",n:"evaluation も頻出。"},
+ {w:"enhance",p:"v.",j:"強化する",d:["悪化させる","削減する","破壊する"],
+  ex:[{e:"This software enhances productivity.",t:"このソフトは生産性を高めます。"},{e:"We aim to enhance customer experience.",t:"顧客体験向上を目指します。"}],
+  syn:"improve, boost",col:"enhance <em>quality</em>",n:"improve より formal。"},
+ {w:"refine",p:"v.",j:"洗練する",d:["雑にする","破壊する","削減する"],
+  ex:[{e:"We need to refine our strategy.",t:"戦略を洗練する必要があります。"},{e:"The product has been refined.",t:"その製品は改良されました。"}],
+  syn:"polish, improve",col:"refine <em>a strategy</em>",n:"refinement も頻出。"},
+ {w:"verify",p:"v.",j:"検証する",d:["否定する","隠す","破棄する"],
+  ex:[{e:"Please verify your email.",t:"メールアドレスをご確認ください。"},{e:"Results have been verified by experts.",t:"結果は専門家により検証されました。"}],
+  syn:"confirm, validate",col:"verify <em>identity</em>",n:"verification も頻出。"},
+ {w:"specific",p:"adj.",j:"具体的な",d:["一般的な","曖昧な","架空の"],
+  ex:[{e:"Please give me a specific example.",t:"具体例をお願いします。"},{e:"He has specific requirements.",t:"彼には具体的な要求があります。"}],
+  syn:"particular, definite",col:"specific <em>example</em>",n:"specifically も頻出。"},
+ {w:"appropriate",p:"adj.",j:"適切な",d:["不適切な","禁止された","暫定的な"],
+  ex:[{e:"Please wear appropriate attire.",t:"適切な服装でお越しください。"},{e:"Take appropriate action immediately.",t:"直ちに適切な措置を取ってください。"}],
+  syn:"suitable, fitting",col:"appropriate <em>action</em>",n:"appropriately も頻出。"},
+ {w:"thorough",p:"adj.",j:"徹底的な",d:["雑な","表面的な","怠惰な"],
+  ex:[{e:"We conducted a thorough investigation.",t:"徹底的な調査を実施しました。"},{e:"Please give it a thorough review.",t:"入念に確認してください。"}],
+  syn:"complete, meticulous",col:"thorough <em>review</em>",n:"発音 /θə́ːroʊ/。"},
+ {w:"objective",p:"n.",j:"目的、目標",d:["手段","結果","予測"],
+  ex:[{e:"Our objective is to increase market share.",t:"我々の目的は市場占有率の向上です。"},{e:"She set clear objectives.",t:"彼女は明確な目標を設定しました。"}],
+  syn:"goal, aim",col:"<em>main</em> objective",n:"形容詞「客観的な」も同綴。"},
+ {w:"strategy",p:"n.",j:"戦略",d:["反論","結果","契約"],
+  ex:[{e:"We need a new marketing strategy.",t:"新マーケティング戦略が必要です。"},{e:"The growth strategy is paying off.",t:"成長戦略は功を奏しています。"}],
+  syn:"plan, approach",col:"<em>marketing</em> strategy",n:"strategic も頻出。"},
+ {w:"approach",p:"n.",j:"取り組み方",d:["距離","背景","結果"],
+  ex:[{e:"We need a different approach.",t:"別のアプローチが必要です。"},{e:"Her approach to teaching is innovative.",t:"彼女の指導法は革新的です。"}],
+  syn:"method, technique",col:"<em>new</em> approach",n:"動詞「近づく」も頻出。"}
+],
+3:[
+ {w:"agreement",p:"n.",j:"合意、契約",d:["対立","保留","予算"],
+  ex:[{e:"We reached an agreement.",t:"合意に達しました。"},{e:"Please sign the agreement.",t:"契約に署名してください。"}],
+  syn:"contract, accord",col:"<em>reach</em> an agreement",n:"in agreement with も頻出。"},
+ {w:"provision",p:"n.",j:"条項、供給",d:["違反","撤回","廃止"],
+  ex:[{e:"The contract has a provision for cancellation.",t:"契約には解約条項があります。"},{e:"The provision of clean water is essential.",t:"清浄水の供給は不可欠です。"}],
+  syn:"clause, supply",col:"<em>contract</em> provision",n:"条項と供給の両義。"},
+ {w:"liability",p:"n.",j:"負債、責任",d:["資産","利益","資本"],
+  ex:[{e:"The company reduced its liabilities.",t:"会社は負債を削減しました。"},{e:"He accepted liability.",t:"彼は責任を認めました。"}],
+  syn:"debt, obligation",col:"<em>limited</em> liability",n:"asset の対。"},
+ {w:"revenue",p:"n.",j:"収益、売上",d:["経費","負債","在庫"],
+  ex:[{e:"Annual revenue increased by 12%.",t:"年間売上は12%増えました。"},{e:"Revenue from online sales doubled.",t:"オンライン売上収益は倍増しました。"}],
+  syn:"income, earnings",col:"<em>annual</em> revenue",n:"profit との区別を。"},
+ {w:"expense",p:"n.",j:"経費",d:["収入","利益","資産"],
+  ex:[{e:"Travel expenses must be reported.",t:"出張費は報告が必要です。"},{e:"We need to reduce operating expenses.",t:"運営経費を削減する必要があります。"}],
+  syn:"cost, expenditure",col:"<em>travel</em> expenses",n:"expense report で頻出。"},
+ {w:"invoice",p:"n.",j:"請求書",d:["領収書","契約書","見積書"],
+  ex:[{e:"Please pay the invoice within 30 days.",t:"請求書は30日以内にお支払いください。"},{e:"I noticed an error on the invoice.",t:"請求書に誤りを見つけました。"}],
+  syn:"bill, statement",col:"<em>issue</em> an invoice",n:"bill より公式。"},
+ {w:"deficit",p:"n.",j:"赤字、不足",d:["利益","余剰","在庫"],
+  ex:[{e:"The company recorded a deficit.",t:"会社は赤字を計上しました。"},{e:"The country has a large trade deficit.",t:"その国は大きな貿易赤字を抱えています。"}],
+  syn:"shortfall, loss",col:"<em>budget</em> deficit",n:"surplus の対。"},
+ {w:"shipment",p:"n.",j:"発送、出荷",d:["在庫","返品","注文"],
+  ex:[{e:"Your shipment will arrive Tuesday.",t:"発送品は火曜に到着予定です。"},{e:"The shipment was delayed.",t:"発送は遅れました。"}],
+  syn:"delivery, dispatch",col:"<em>delayed</em> shipment",n:"ship の名詞形。"},
+ {w:"inventory",p:"n.",j:"在庫、棚卸",d:["請求書","発注書","売上"],
+  ex:[{e:"We're doing inventory this weekend.",t:"今週末は棚卸をします。"},{e:"Our inventory is running low.",t:"在庫が減ってきています。"}],
+  syn:"stock, supply",col:"inventory <em>management</em>",n:"take inventory も。"},
+ {w:"warehouse",p:"n.",j:"倉庫",d:["店舗","本社","工場"],
+  ex:[{e:"Our warehouse is near the airport.",t:"倉庫は空港近くにあります。"},{e:"Goods are stored in a refrigerated warehouse.",t:"商品は冷蔵倉庫に保管されています。"}],
+  syn:"depot, storehouse",col:"<em>distribution</em> warehouse",n:"物流関連で必出。"}
+],
+4:[
+ {w:"applicant",p:"n.",j:"応募者",d:["合格者","面接官","紹介者"],
+  ex:[{e:"Each applicant will be interviewed twice.",t:"各応募者は2回面接を受けます。"},{e:"All applicants must submit a portfolio.",t:"全応募者はポートフォリオ提出が必要です。"}],
+  syn:"candidate, job seeker",col:"<em>qualified</em> applicant",n:"apply + ant。"},
+ {w:"qualification",p:"n.",j:"資格、適性",d:["給与","勤務地","勤続年数"],
+  ex:[{e:"She has all the qualifications.",t:"彼女は資格をすべて備えています。"},{e:"What qualifications are required?",t:"求められる資格は何ですか。"}],
+  syn:"credentials, requirements",col:"<em>required</em> qualifications",n:"通常複数形。"},
+ {w:"promote",p:"v.",j:"昇進させる、宣伝する",d:["解雇する","降格する","譴責する"],
+  ex:[{e:"She was promoted to senior manager.",t:"彼女はシニアマネージャーに昇進しました。"},{e:"The campaign promotes our product.",t:"キャンペーンは商品を宣伝します。"}],
+  syn:"upgrade, advertise",col:"be promoted <em>to</em> ~",n:"昇進/宣伝の2義。"},
+ {w:"diversity",p:"n.",j:"多様性",d:["統一性","階層性","効率性"],
+  ex:[{e:"The company values diversity.",t:"当社は多様性を重んじています。"},{e:"The city is known for cultural diversity.",t:"その街は文化的多様性で知られます。"}],
+  syn:"variety, range",col:"<em>cultural</em> diversity",n:"D&I, DEI も覚える。"},
+ {w:"launch",p:"v.",j:"発売する、開始する",d:["回収する","中止する","延期する"],
+  ex:[{e:"We plan to launch the product in May.",t:"5月に発売予定です。"},{e:"The website was launched yesterday.",t:"サイトは昨日公開されました。"}],
+  syn:"introduce, release",col:"launch <em>a product</em>",n:"名詞「発売」もあり。"},
+ {w:"endorse",p:"v.",j:"推薦する、是認する",d:["批判する","拒否する","審査する"],
+  ex:[{e:"The product was endorsed by an athlete.",t:"その商品はアスリートに推薦されました。"},{e:"The committee endorsed the policy.",t:"委員会はその方針を是認しました。"}],
+  syn:"approve, support",col:"endorse <em>a product</em>",n:"endorsement も頻出。"},
+ {w:"competitor",p:"n.",j:"競合他社",d:["顧客","仕入先","株主"],
+  ex:[{e:"Our main competitor lowered prices.",t:"主要競合が値下げをしました。"},{e:"We need to stay ahead of competitors.",t:"競合の先を行く必要があります。"}],
+  syn:"rival, competition",col:"<em>main</em> competitor",n:"compete の派生。"},
+ {w:"sustainable",p:"adj.",j:"持続可能な",d:["一時的な","破壊的な","非効率な"],
+  ex:[{e:"We aim for sustainable growth.",t:"持続可能な成長を目指します。"},{e:"The company uses sustainable materials.",t:"会社は持続可能な材料を使用します。"}],
+  syn:"viable, lasting",col:"sustainable <em>growth</em>",n:"sustainability も頻出。"},
+ {w:"transparent",p:"adj.",j:"透明な、率直な",d:["不透明な","秘密の","複雑な"],
+  ex:[{e:"We aim to be transparent.",t:"透明性を保つことを目指します。"},{e:"Transparent pricing builds trust.",t:"透明な価格設定は信頼を築きます。"}],
+  syn:"clear, open",col:"transparent <em>process</em>",n:"transparency も超頻出。"},
+ {w:"impact",p:"n.",j:"影響、衝撃",d:["欠点","利点","契約"],
+  ex:[{e:"The new law will have a major impact.",t:"その新法は大きな影響を及ぼします。"},{e:"We need to assess the environmental impact.",t:"環境への影響を評価する必要があります。"}],
+  syn:"effect, influence",col:"<em>have</em> an impact",n:"動詞用法もあり。"}
+],
+5:[
+ {w:"clarify",p:"v.",j:"明確にする",d:["曖昧にする","隠す","否定する"],
+  ex:[{e:"Could you clarify what you mean?",t:"あなたの意味を明確にしてもらえますか。"},{e:"The manual clarifies all procedures.",t:"マニュアルは全手順を明確にします。"}],
+  syn:"explain, elucidate",col:"clarify <em>a point</em>",n:"clarification も頻出。"},
+ {w:"specify",p:"v.",j:"明示する",d:["省略する","曖昧にする","否定する"],
+  ex:[{e:"Please specify your preferences.",t:"希望をご指定ください。"},{e:"The contract specifies a 30-day notice.",t:"契約は30日通知期間を明示します。"}],
+  syn:"state, stipulate",col:"specify <em>terms</em>",n:"specification も重要。"},
+ {w:"authorize",p:"v.",j:"権限を与える",d:["禁止する","拒否する","削除する"],
+  ex:[{e:"Only managers can authorize refunds.",t:"返金承認の権限は管理職のみ。"},{e:"Please authorize the payment.",t:"支払いを承認してください。"}],
+  syn:"approve, permit",col:"authorize <em>a payment</em>",n:"authorized personnel only も。"},
+ {w:"comply",p:"v.",j:"従う、応じる",d:["違反する","拒否する","否定する"],
+  ex:[{e:"All companies must comply with regulations.",t:"全社が規制に従う必要があります。"},{e:"The product complies with safety standards.",t:"その製品は安全基準に適合します。"}],
+  syn:"obey, conform",col:"comply <em>with</em> ~",n:"前置詞 with を忘れない。"},
+ {w:"acknowledge",p:"v.",j:"受領を知らせる、認める",d:["却下する","署名する","引用する"],
+  ex:[{e:"Please acknowledge receipt.",t:"受領をお知らせください。"},{e:"We must acknowledge the team's hard work.",t:"チームの努力を認めなければなりません。"}],
+  syn:"recognize, admit",col:"acknowledge <em>receipt</em>",n:"メール定型句。"},
+ {w:"however",p:"adv.",j:"しかしながら",d:["したがって","なぜなら","さらに"],
+  ex:[{e:"The plan is good. However, it's expensive.",t:"計画は良い。しかしながら、高価だ。"},{e:"However, the results were surprising.",t:"しかし、結果は驚くべきものでした。"}],
+  syn:"but, nevertheless",col:"文頭 <em>However,</em>",n:"but よりformal。"},
+ {w:"therefore",p:"adv.",j:"したがって",d:["しかし","なぜなら","さらに"],
+  ex:[{e:"Sales are up. Therefore, we'll hire more staff.",t:"売上が上がっている。したがって人員を増やす。"},{e:"Therefore, we recommend the following action.",t:"したがって、以下の措置を推奨します。"}],
+  syn:"thus, hence",col:"文頭 <em>Therefore,</em>",n:"so よりformal。"},
+ {w:"despite",p:"prep.",j:"〜にもかかわらず",d:["〜のために","〜の代わりに","〜について"],
+  ex:[{e:"Despite the rain, we went out.",t:"雨にもかかわらず出かけました。"},{e:"Despite his efforts, he failed.",t:"努力にもかかわらず、彼は失敗しました。"}],
+  syn:"in spite of, notwithstanding",col:"<em>despite</em> + 名詞",n:"although(節)との違いに注意。"},
+ {w:"although",p:"conj.",j:"〜だけれど",d:["なぜなら","したがって","もし"],
+  ex:[{e:"Although it was raining, we went out.",t:"雨が降っていたけれど、出かけました。"},{e:"Although tired, he continued working.",t:"疲れていたものの、彼は仕事を続けました。"}],
+  syn:"though, even though",col:"<em>Although</em> + S V",n:"接続詞、節を導く。"},
+ {w:"throughout",p:"prep.",j:"〜中ずっと",d:["〜の前に","〜のために","〜の中に"],
+  ex:[{e:"He worked throughout the night.",t:"彼は一晩中働きました。"},{e:"The store has locations throughout the country.",t:"その店は全国に店舗があります。"}],
+  syn:"all over, during",col:"<em>throughout</em> + 時間/場所",n:"時間と場所の2義。"}
+],
+6:[
+ {w:"according",p:"prep.",j:"〜によると",d:["〜の代わりに","〜について","〜の前に"],
+  ex:[{e:"According to the report, sales are up.",t:"報告書によれば、売上は上昇しています。"},{e:"Please proceed according to the instructions.",t:"指示に従って進めてください。"}],
+  syn:"as stated by, per",col:"<em>according to</em>",n:"必ず to を伴う。"},
+ {w:"regarding",p:"prep.",j:"〜について",d:["〜のために","〜の代わりに","〜の前に"],
+  ex:[{e:"I have a question regarding your email.",t:"あなたのメールについて質問があります。"},{e:"Please contact us regarding any issues.",t:"問題があれば当方にご連絡ください。"}],
+  syn:"concerning, about",col:"<em>regarding</em> + 名詞",n:"about より formal。"},
+ {w:"within",p:"prep.",j:"〜以内に",d:["〜の外に","〜を超えて","〜の前に"],
+  ex:[{e:"Please respond within 24 hours.",t:"24時間以内にご返答ください。"},{e:"The hotel is within walking distance.",t:"ホテルは徒歩圏内です。"}],
+  syn:"inside, less than",col:"<em>within</em> + 時間/場所",n:"within budget も頻出。"},
+ {w:"upon",p:"prep.",j:"〜次第",d:["〜の下に","〜の前に","〜を超えて"],
+  ex:[{e:"Upon arrival, please show your ID.",t:"到着次第、身分証をご提示ください。"},{e:"The decision was based upon analysis.",t:"その決定は分析に基づいていました。"}],
+  syn:"on, as soon as",col:"<em>upon</em> arrival",n:"on の formal版。"},
+ {w:"prior",p:"adj.",j:"前の、〜より前に",d:["後の","現在の","将来の"],
+  ex:[{e:"Prior to the meeting, please review the documents.",t:"会議の前に、書類をご確認ください。"},{e:"She has prior experience.",t:"彼女には前職経験があります。"}],
+  syn:"previous, earlier",col:"<em>prior to</em> ~",n:"超頻出。"},
+ {w:"per",p:"prep.",j:"〜ごとに",d:["〜の代わりに","〜の前に","〜を超えて"],
+  ex:[{e:"The cost is $10 per person.",t:"費用は一人あたり10ドルです。"},{e:"Per our agreement, payment is due in 30 days.",t:"合意により、30日以内のお支払いとなります。"}],
+  syn:"for each, as per",col:"<em>per</em> person",n:"as per も頻出。"},
+ {w:"via",p:"prep.",j:"〜経由で",d:["〜なしに","〜の代わりに","〜の前に"],
+  ex:[{e:"You can contact us via email.",t:"メール経由でご連絡いただけます。"},{e:"The flight goes via Hong Kong.",t:"その便は香港経由です。"}],
+  syn:"through, by way of",col:"<em>via</em> email",n:"通信・移動手段で頻出。"},
+ {w:"emphasize",p:"v.",j:"強調する",d:["軽視する","否定する","削除する"],
+  ex:[{e:"The CEO emphasized teamwork.",t:"CEOはチームワークを強調しました。"},{e:"Let me emphasize that this is confidential.",t:"これが機密事項であることを強調します。"}],
+  syn:"stress, highlight",col:"emphasize <em>the importance</em>",n:"emphasis も頻出。"},
+ {w:"proceed",p:"v.",j:"進む、続行する",d:["停止する","退却する","延期する"],
+  ex:[{e:"Please proceed to gate 23.",t:"23番ゲートへお進みください。"},{e:"We will proceed with the plan.",t:"計画を進めます。"}],
+  syn:"continue, advance",col:"proceed <em>with</em>",n:"空港アナウンスで頻出。"},
+ {w:"validate",p:"v.",j:"有効にする、立証する",d:["無効化する","拒否する","複製する"],
+  ex:[{e:"Please validate your parking ticket.",t:"駐車券は有効化してください。"},{e:"The results validate our hypothesis.",t:"結果は仮説を立証します。"}],
+  syn:"confirm, verify",col:"validate <em>a ticket</em>",n:"validation も頻出。"}
+]};
+
+/* ========== Part5 文法問題（自作30問、TOEIC形式） ========== */
+const GRAMMAR = [
+ {q:"The new policy will be ___ next Monday.",o:["implement","implementing","implemented","implementation"],a:2,
+  cat:"態",exp:"受動態。主語 the new policy（方針）が「実施される」側なので、be + 過去分詞 (implemented)。<b>主語と動詞の関係</b>を確認するクセを。"},
+ {q:"All applicants must submit their resumes ___ Friday.",o:["by","until","since","for"],a:0,
+  cat:"前置詞",exp:"by は「期限・締切」、until は「継続終了」。「金曜<b>までに</b>提出」なので by。until は wait until Friday のように継続動作で使う。"},
+ {q:"___ the heavy rain, the outdoor event was held as scheduled.",o:["Although","Despite","However","Because"],a:1,
+  cat:"前置詞/接続詞",exp:"後ろが名詞句 the heavy rain なので<b>前置詞</b>が必要。Although は接続詞（節を取る）。Despite + 名詞 = 〜にもかかわらず。"},
+ {q:"The manager is responsible ___ overseeing the new project.",o:["of","for","to","with"],a:1,
+  cat:"前置詞",exp:"be responsible for ~ は「〜の責任がある」の固定表現。<b>形容詞+前置詞</b>はセットで暗記。"},
+ {q:"Sales have increased ___ 15% compared to last year.",o:["by","to","at","in"],a:0,
+  cat:"前置詞",exp:"increase by ~ は「~の差で増加」。increase to ~ は「~まで到達」。「15%増えた」と<b>差</b>を表すので by。"},
+ {q:"The committee ___ the proposal yesterday.",o:["approve","approves","approved","approval"],a:2,
+  cat:"時制",exp:"yesterday があるので<b>過去形</b>。approved。approval は名詞。"},
+ {q:"___ you complete the form, please submit it to HR.",o:["Although","Despite","Once","Until"],a:2,
+  cat:"接続詞",exp:"Once = 〜したらすぐに。「用紙を完成させたら提出してください」の意味。Until だと「提出するまで完成させない」で逆。"},
+ {q:"The report must be ___ by the end of this week.",o:["complete","completing","completed","completion"],a:2,
+  cat:"態",exp:"must be + 過去分詞 = 受動。「報告書が完成<b>させられる</b>」必要があるので completed。"},
+ {q:"She has been working here ___ five years.",o:["since","for","during","while"],a:1,
+  cat:"前置詞",exp:"for + 期間（5年間）。since + 時点（since 2020）。<b>期間か時点か</b>で使い分け。"},
+ {q:"The project was completed ___ schedule.",o:["on","in","at","by"],a:0,
+  cat:"前置詞",exp:"on schedule = 予定通り。on time（時間通り）、ahead of schedule（予定より早く）も頻出。"},
+
+ {q:"___ the new system has reduced costs, employees find it complex.",o:["Despite","Although","Because","Therefore"],a:1,
+  cat:"接続詞",exp:"後ろが S V の節なので<b>接続詞</b>必要。Despite は前置詞。Although = 〜だけれども。"},
+ {q:"The CEO ___ the merger plan to shareholders next week.",o:["announce","will announce","announced","has announced"],a:1,
+  cat:"時制",exp:"next week があるので<b>未来形</b>。will announce。"},
+ {q:"Please make sure ___ all the documents before the meeting.",o:["review","reviewing","to review","reviewed"],a:2,
+  cat:"to不定詞",exp:"make sure to do = 必ず〜する。<b>to不定詞</b>を取る。make sure that S V でも可。"},
+ {q:"The training session is mandatory ___ all new employees.",o:["of","for","to","with"],a:1,
+  cat:"前置詞",exp:"mandatory for ~ = 〜にとって必須。<b>必須・要求の対象</b>には for。"},
+ {q:"___ the budget is limited, we need to prioritize.",o:["Despite","Because","Although","However"],a:1,
+  cat:"接続詞",exp:"後ろが原因（予算が限られている）→ 結果（優先順位をつける必要）なので Because。Although は逆接で意味が合わない。"},
+ {q:"The product has been ___ recalled due to safety issues.",o:["voluntary","voluntarily","volunteer","volunteered"],a:1,
+  cat:"品詞",exp:"動詞 recalled を修飾するので<b>副詞</b>。voluntarily = 自発的に。形容詞 voluntary との区別。"},
+ {q:"All employees are encouraged ___ in the wellness program.",o:["participate","participating","to participate","participated"],a:2,
+  cat:"to不定詞",exp:"encourage A to do = Aに〜するよう促す。受動態 be encouraged to do の形。<b>動詞の語法</b>を暗記。"},
+ {q:"The new policy will take effect ___ January 1st.",o:["in","on","at","from"],a:1,
+  cat:"前置詞",exp:"<b>特定の日付には on</b>。in は月・年（in January, in 2025）、at は時刻（at 3 p.m.）。"},
+ {q:"The meeting room is located ___ the third floor.",o:["in","on","at","by"],a:1,
+  cat:"前置詞",exp:"<b>階数には on</b>（on the third floor）。in the building, at the entrance などと使い分け。"},
+ {q:"___ you have any questions, please contact our support team.",o:["Should","Will","Must","Could"],a:0,
+  cat:"仮定法",exp:"Should you ~ = if you should ~（万一〜の場合）の<b>倒置</b>。formal な仮定法。"},
+
+ {q:"The presentation was so ___ that everyone took notes.",o:["inform","informed","informing","informative"],a:3,
+  cat:"品詞",exp:"so + <b>形容詞</b> + that 構文。informative（有益な）が形容詞。-ive で終わる形容詞は頻出。"},
+ {q:"___ the contract is signed, both parties must adhere to it.",o:["After","While","Despite","Although"],a:0,
+  cat:"接続詞",exp:"After = 〜した後。「契約が署名された後、両者は遵守する必要がある」。時系列の<b>後</b>を表す。"},
+ {q:"The customer service team responds ___ to all inquiries.",o:["prompt","promptly","promptness","prompted"],a:1,
+  cat:"品詞",exp:"動詞 respond を修飾する<b>副詞</b>。promptly = 迅速に。-ly が副詞の典型サイン。"},
+ {q:"The new software is compatible ___ all operating systems.",o:["of","for","with","to"],a:2,
+  cat:"前置詞",exp:"compatible with ~ = 〜と互換性がある。<b>形容詞+前置詞</b>のセット。"},
+ {q:"Please refrain ___ smoking in this area.",o:["of","from","to","with"],a:1,
+  cat:"前置詞",exp:"refrain from ~ = 〜を控える。<b>動詞+前置詞</b>のセット。Please refrain from ~ は公共アナウンス頻出。"},
+ {q:"The conference will be held ___ the convention center.",o:["in","at","on","by"],a:1,
+  cat:"前置詞",exp:"<b>建物・地点には at</b>（at the convention center）。in なら「中で」、at は「点として」のニュアンス。"},
+ {q:"All financial transactions are ___ by the accounting department.",o:["overseeing","oversaw","overseen","oversee"],a:2,
+  cat:"態",exp:"be + 過去分詞 = 受動態。overseeの過去分詞は overseen（不規則）。<b>不規則動詞</b>は要暗記。"},
+ {q:"The project deadline has been ___ to next month.",o:["extend","extending","extended","extension"],a:2,
+  cat:"態",exp:"has been + 過去分詞 = 現在完了の受動態。<b>「延長された」</b>ので extended。extension は名詞。"},
+ {q:"___ the recent decline in sales, the company remains optimistic.",o:["Because of","Despite","Due to","Owing to"],a:1,
+  cat:"前置詞",exp:"Despite + 名詞 = 〜にもかかわらず。後ろが「楽観的」と<b>逆接</b>なので、Because of/Due to/Owing to（原因）は不適。"},
+ {q:"The new manager has ___ implemented several reforms.",o:["success","successful","successfully","successes"],a:2,
+  cat:"品詞",exp:"動詞 implemented を修飾する<b>副詞</b>。successfully = 成功裏に。<b>has + 副詞 + 過去分詞</b>の語順に注意。"}
+];
+
+/* ========== Part2 リスニング問題（自作20問） ========== */
+const LISTEN = [
+ {q:"Where is the meeting being held?",o:["In Conference Room B.","Yesterday at 3 p.m.","Mr. Tanaka will attend."],a:0,exp:"Where（場所）の質問。<b>場所</b>を答えるAが正解。Bは時間、Cは人物で見当違い。"},
+ {q:"When does the new product launch?",o:["In the marketing department.","Next Tuesday morning.","About fifty units."],a:1,exp:"When（時）の質問には<b>時間</b>を答える。Bは時間（来週火曜の朝）が答え。"},
+ {q:"Who's giving the presentation today?",o:["The sales director.","About new strategies.","At ten o'clock."],a:0,exp:"Who（誰）の質問には<b>人物</b>を答える。Aの「営業部長」が正解。"},
+ {q:"How long will the training session last?",o:["In the main hall.","About two hours.","Once a month."],a:1,exp:"How long（どのくらい）の質問には<b>期間</b>を答える。Bの「約2時間」。"},
+ {q:"Why was the deadline extended?",o:["By the manager.","Because the team needed more time.","Until next Friday."],a:1,exp:"Why（理由）の質問には<b>Because</b>で始まる答え。Bが正解。"},
+ {q:"Could you send me the report by email?",o:["I sent it yesterday.","On the third floor.","She's our new client."],a:0,exp:"<b>依頼</b>への応答。Aの「昨日送りました」は適切な応答。間接的な肯定パターン。"},
+ {q:"What time should we leave for the airport?",o:["By taxi.","Around six thirty.","To Bangkok."],a:1,exp:"What time（何時に）の質問には<b>時刻</b>を答える。Bの「6時半ごろ」。"},
+ {q:"Have you finished the quarterly report yet?",o:["Not quite, but almost.","In the conference room.","It was very successful."],a:0,exp:"Have you finished（完了確認）。<b>Not quite, but almost</b>(まだだがもうすぐ)は典型的な応答パターン。"},
+ {q:"Where can I find the office supplies?",o:["In the storage room.","Last Monday.","About fifty dollars."],a:0,exp:"Where（場所）には<b>場所</b>。Aの「保管室」。Cは値段、Bは時間。"},
+ {q:"Would you like to join us for lunch?",o:["I'd love to.","In the cafeteria.","About noon."],a:0,exp:"Would you like to ~?（誘い）への応答は<b>I'd love to</b>(ぜひ)が定番。"},
+
+ {q:"How many guests are expected at the event?",o:["At the hotel ballroom.","Around two hundred.","Last weekend."],a:1,exp:"How many（数）には<b>数字</b>。Bの「約200人」。"},
+ {q:"Did you receive the contract I sent yesterday?",o:["Yes, I'll review it today.","It's in the file cabinet.","She signed it last week."],a:0,exp:"Did you receive ~?（受領確認）。Aの「はい、今日確認します」は適切な応答。"},
+ {q:"Where should I submit the application form?",o:["By next Friday.","To the HR department.","Two copies, please."],a:1,exp:"Where（場所）。Bの「人事部へ」が場所として正解。"},
+ {q:"How was your business trip to Singapore?",o:["For three days.","Very productive, thanks.","By plane."],a:1,exp:"How was ~?（感想を聞く）には<b>感想</b>。Bの「とても生産的でした」。"},
+ {q:"Why isn't the conference room available?",o:["It's being renovated.","Yes, please reserve it.","About twenty people."],a:0,exp:"Why（理由）には<b>理由</b>。Aの「改装中だから」。Becauseは省略可能。"},
+ {q:"Could you help me set up the projector?",o:["Sure, I'll be right there.","In the auditorium.","For the presentation."],a:0,exp:"Could you ~?（依頼）には<b>承諾</b>の応答。Aの「もちろん、すぐ行きます」。"},
+ {q:"When will the new policy take effect?",o:["The CEO announced it.","Starting next month.","To improve safety."],a:1,exp:"When（時期）には<b>時期</b>。Bの「来月から」。"},
+ {q:"Who should I contact about the billing issue?",o:["The accounting manager.","About three hundred dollars.","Last Tuesday."],a:0,exp:"Who（誰）。Aの「経理マネージャー」。"},
+ {q:"How much does the premium membership cost?",o:["Once a year.","Fifty dollars per month.","At any branch."],a:1,exp:"How much（値段）には<b>値段</b>。Bの「月50ドル」。"},
+ {q:"Would you mind closing the window?",o:["Not at all.","It's quite warm today.","From the back row."],a:0,exp:"Would you mind ~?（依頼）への<b>承諾</b>は<b>Not at all</b>(構いません=どうぞ)。Mindの否定構造に注意。"}
+];
+
+/* ========== ストレージ ========== */
+const LS_KEY = "toeic_sprint_v1";
+const Storage = {
+  async get(k){ try{ if(window.storage?.get){ const r = await window.storage.get(k); return r ? r.value : null; } }catch(e){} try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  async set(k, v){ try{ if(window.storage?.set){ await window.storage.set(k, v); return; } }catch(e){} try{ localStorage.setItem(k, v); }catch(e){} },
+  async remove(k){ try{ if(window.storage?.delete){ await window.storage.delete(k); return; } }catch(e){} try{ localStorage.removeItem(k); }catch(e){} }
+};
+
+let state = {
+  currentDay:1, // 今日のDay
+  tasks:{}, // {day-time: true}
+  vocab:{ day:1, streak:{}, grad:{}, weakHist:{}, book:{} },
+  grammar:{ idx:0, answered:{}, correct:{} },
+  listen:{ idx:0, answered:{}, correct:{} },
+  settings:{ voice:true, rate:0.9 }
+};
+let session = { vocabSession:null, currentWord:null, _pickedEx:0, currentQ:null, currentLQ:null };
+let currentTab = "roadmap";
+
+async function loadState(){
+  try{ const raw = await Storage.get(LS_KEY); if(!raw) return;
+    const p = typeof raw === "string" ? JSON.parse(raw) : raw;
+    state = Object.assign(state, p);
+  }catch(e){}
+}
+async function saveState(){
+  try{ await Storage.set(LS_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+/* ========== 音声 ========== */
+const synth = window.speechSynthesis;
+let voices = {en:null};
+let audioUnlocked = false;
+function loadVoices(){
+  if(!synth) return; const all = synth.getVoices(); if(!all.length) return;
+  const pick = f => all.find(f);
+  voices.en =
+    pick(v => v.lang.startsWith("en") && /\(Enhanced\)|\(Premium\)|Siri/i.test(v.name)) ||
+    pick(v => v.lang.startsWith("en") && /Neural|Natural/i.test(v.name)) ||
+    pick(v => v.lang.startsWith("en") && /Microsoft (Aria|Jenny|Guy|Davis)/i.test(v.name)) ||
+    pick(v => v.lang === "en-US" && /Google US English/i.test(v.name)) ||
+    pick(v => v.lang.startsWith("en") && /Samantha|Karen|Daniel|Alex/i.test(v.name)) ||
+    pick(v => v.lang === "en-US") || pick(v => v.lang.startsWith("en"));
+  const info = document.getElementById("voice-info");
+  if(info){
+    if(voices.en){
+      const isGood = /Enhanced|Premium|Siri|Neural|Natural|Google|Aria|Jenny/i.test(voices.en.name);
+      info.innerHTML = `🔊 英語音声: <b>${voices.en.name}</b>${isGood ? "" : " <span style=\"color:#e85a4f\">⚠ より自然な声に変更可能</span>"}`;
+    }
+  }
+}
+if(synth){ loadVoices(); synth.onvoiceschanged = loadVoices; }
+function unlockAudio(){ if(audioUnlocked || !synth) return; const u = new SpeechSynthesisUtterance(" "); u.volume = 0; synth.speak(u); audioUnlocked = true; }
+function speak(text, lang="en"){
+  if(!state.settings.voice || !synth || !text) return Promise.resolve();
+  if(synth.paused) synth.resume();
+  return new Promise(resolve => {
+    const isWord = lang === "en" && text.split(/\s+/).length === 1;
+    const padded = isWord ? `${text}.` : text;
+    const u = new SpeechSynthesisUtterance(padded);
+    const v = voices[lang]; if(v) u.voice = v;
+    u.lang = "en-US";
+    u.rate = state.settings.rate;
+    u.pitch = 0.95;
+    u.volume = 1.0;
+    u.onend = () => resolve();
+    u.onerror = () => resolve();
+    synth.speak(u);
+  });
+}
+async function speakSeq(items){
+  if(!state.settings.voice || !synth) return;
+  synth.cancel(); await new Promise(r => setTimeout(r, 60));
+  for(const it of items){ await speak(it.text, "en"); }
+}
+
+/* ========== タブ切替 ========== */
+function switchTab(name){
+  currentTab = name;
+  document.querySelectorAll(".tabs button").forEach(b => b.classList.toggle("on", b.dataset.tab === name));
+  ["roadmap","vocab","grammar","listen"].forEach(t => {
+    document.getElementById("tab-"+t).classList.toggle("hidden", t !== name);
+  });
+  if(name === "roadmap") renderRoadmap();
+  else if(name === "vocab") startVocab();
+  else if(name === "grammar") renderGrammar();
+  else if(name === "listen") renderListen();
+}
+document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => switchTab(b.dataset.tab));
+
+/* ========== ロードマップ ========== */
+function renderRoadmap(){
+  const total = ROADMAP.length * 3;
+  const done = Object.keys(state.tasks).filter(k => state.tasks[k]).length;
+  const pct = Math.round(100 * done / total);
+  document.getElementById("overall-pct").textContent = pct + "%";
+  document.getElementById("overall-fill").style.width = pct + "%";
+
+  const today = ROADMAP.find(d => d.day === state.currentDay) || ROADMAP[0];
+  const todayDone = today.tasks.filter((t,i) => state.tasks[`${today.day}-${i}`]).length;
+  document.getElementById("hero-day").textContent = `Day ${today.day} / 6`;
+  document.getElementById("hero-prog").textContent = `${todayDone}/3 完了`;
+  document.getElementById("hero-title").innerHTML = `${today.title} <span class="num">D${today.day}</span>`;
+  document.getElementById("hero-theme").textContent = today.theme;
+
+  const list = document.getElementById("day-list");
+  list.innerHTML = "";
+  ROADMAP.forEach(d => {
+    const card = document.createElement("div");
+    card.className = "day-card" + (d.day === state.currentDay ? " today" : "") + (d.day < state.currentDay ? " done" : "");
+    const status = d.day === state.currentDay ? '<span class="status now">● TODAY</span>' :
+                   d.day < state.currentDay ? '<span class="status">完了</span>' :
+                   '<span class="status">未来</span>';
+    let tasksHtml = '';
+    d.tasks.forEach((t,i) => {
+      const key = `${d.day}-${i}`;
+      const isDone = state.tasks[key];
+      tasksHtml += `
+        <div class="task ${isDone?'done':''}" onclick="toggleTask(${d.day},${i})">
+          <div class="check">${isDone?'✓':''}</div>
+          <div class="body">
+            <div class="time">${t.time}</div>
+            <div class="desc">${t.desc}</div>
+            <span class="task-action" onclick="event.stopPropagation();gotoTask('${t.type}',${d.day})">${t.type==='vocab'?'📚 単語へ':t.type==='grammar'?'📝 文法へ':'🎧 リスニングへ'}</span>
+          </div>
+        </div>`;
+    });
+    card.innerHTML = `
+      <div class="head">
+        <h3><b>${d.day}</b>${d.title}</h3>
+        ${status}
+      </div>
+      <div class="theme">${d.theme}</div>
+      <div class="tasks">${tasksHtml}</div>
+    `;
+    list.appendChild(card);
+  });
+
+  // 次のDayに進めるかチェック
+  if(todayDone === 3 && state.currentDay < 6){
+    setTimeout(() => {
+      if(confirm(`Day ${state.currentDay} の全タスク完了！\nDay ${state.currentDay+1} に進みますか？`)){
+        state.currentDay++; saveState(); renderRoadmap();
+      }
+    }, 300);
+  }
+}
+
+function toggleTask(day, idx){
+  const key = `${day}-${idx}`;
+  state.tasks[key] = !state.tasks[key];
+  saveState(); renderRoadmap();
+}
+
+function gotoTask(type, day){
+  if(type === "vocab"){ state.vocab.day = day; switchTab("vocab"); }
+  else if(type === "grammar"){ switchTab("grammar"); }
+  else if(type === "listen"){ switchTab("listen"); }
+}
+
+/* ========== 単語学習 ========== */
+function vk(w){ return w.w; }
+
+function vocabPool(){
+  const all = [];
+  for(let d=1; d<=6; d++){ (VOCAB[d]||[]).forEach(w => all.push({...w, day:d})); }
+  return all;
+}
+
+function pickVocab(){
+  const pool = vocabPool();
+  const dayWords = VOCAB[state.vocab.day] || [];
+  const ungrad = dayWords.filter(w => !state.vocab.grad[vk(w)]);
+  if(ungrad.length === 0){
+    // 全て卒業：他のDayから出す
+    const others = pool.filter(w => !state.vocab.grad[vk(w)]);
+    if(others.length === 0) return pool[Math.floor(Math.random() * pool.length)];
+    return others[Math.floor(Math.random() * others.length)];
+  }
+  // 20%で卒業語復習
+  if(Math.random() < 0.2){
+    const grads = pool.filter(w => state.vocab.grad[vk(w)]);
+    if(grads.length > 0){
+      const c = grads[Math.floor(Math.random() * grads.length)];
+      if(!session.currentWord || c.w !== session.currentWord.w) return c;
+    }
+  }
+  let cand, tries = 0;
+  do {
+    cand = ungrad[Math.floor(Math.random() * ungrad.length)];
+    tries++;
+  } while(session.currentWord && cand.w === session.currentWord.w && tries < 10 && ungrad.length > 1);
+  return cand;
+}
+
+let vocabTimerInt = null, vocabAnswered = false;
+function startVocabTimer(){
+  clearInterval(vocabTimerInt);
+  const start = Date.now();
+  const t = document.getElementById("vocab-timer");
+  t.classList.remove("warn"); t.textContent = "0s";
+  vocabTimerInt = setInterval(()=>{
+    const s = Math.floor((Date.now() - start)/1000);
+    t.textContent = `${s}s`;
+    if(s >= 20) t.classList.add("warn");
+  }, 250);
+}
+
+function startVocab(){
+  renderVocab();
+}
+
+function renderVocab(){
+  document.removeEventListener("click", vocabAdvance, true);
+  const w = pickVocab();
+  if(!w){ return; }
+  session.currentWord = w;
+  vocabAnswered = false;
+
+  const grad = Object.keys(state.vocab.grad).length;
+  const total = vocabPool().length;
+  document.getElementById("vocab-qno").textContent = `${grad} / ${total} 卒業`;
+  document.getElementById("word").textContent = w.w;
+  document.getElementById("pos").textContent = w.p || "";
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("bookmark").classList.add("hidden");
+
+  const streak = state.vocab.streak[vk(w)] || 0;
+  for(let i=0; i<3; i++) document.getElementById("pip-"+i).classList.toggle("on", i < streak);
+
+  session._pickedEx = Math.floor(Math.random() * (w.ex||[]).length);
+
+  const opts = [{text:w.j, ok:true}, ...w.d.map(t => ({text:t, ok:false}))];
+  for(let i=opts.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[opts[i],opts[j]]=[opts[j],opts[i]];}
+  const idxLabels = ["A","B","C","D"];
+  const ch = document.getElementById("choices");
+  ch.innerHTML = "";
+  opts.forEach((o,i)=>{
+    const b = document.createElement("button");
+    b.className = "choice";
+    b.innerHTML = `<span class="idx">${idxLabels[i]}</span><span>${o.text}</span>`;
+    b.onclick = (e) => { e.stopPropagation(); answerVocab(o, b, w); };
+    ch.appendChild(b);
+  });
+  setTimeout(() => speak(w.w, "en"), 80);
+  startVocabTimer();
+}
+
+function answerVocab(opt, btn, w){
+  if(vocabAnswered) return;
+  vocabAnswered = true;
+  clearInterval(vocabTimerInt);
+
+  document.querySelectorAll("#choices .choice").forEach(b => {
+    b.disabled = true;
+    if(b.querySelector("span:last-child").textContent === w.j) b.classList.add("correct");
+  });
+
+  let graduated = false;
+  if(!opt.ok){
+    btn.classList.add("wrong");
+    state.vocab.streak[vk(w)] = 0;
+    state.vocab.weakHist[vk(w)] = (state.vocab.weakHist[vk(w)] || 0) + 1;
+    delete state.vocab.grad[vk(w)];
+    session.reviewWord = w; // 次に同じ語
+  } else {
+    state.vocab.streak[vk(w)] = (state.vocab.streak[vk(w)] || 0) + 1;
+    if(state.vocab.streak[vk(w)] >= 3){
+      state.vocab.grad[vk(w)] = Date.now();
+      delete state.vocab.streak[vk(w)];
+      graduated = true;
+    }
+  }
+
+  document.getElementById("verdict").className = "verdict " + (opt.ok ? "ok" : "ng");
+  document.getElementById("verdict-text").textContent = opt.ok ? "✓ Correct" : "✗ Incorrect";
+  document.getElementById("verdict-meaning").textContent = `${w.w} ・ ${w.j}`;
+
+  const cur = graduated ? 3 : (state.vocab.streak[vk(w)] || 0);
+  for(let i=0; i<3; i++){
+    const pip = document.getElementById("sp-"+i); pip.className = "pip";
+    if(i < cur) pip.classList.add("on");
+  }
+  document.getElementById("streak-msg").textContent = graduated ? "🎓 卒業！" : (opt.ok ? `あと ${3-cur} 回で卒業` : "リセット・次は同じ語");
+  document.getElementById("streak-msg").className = "msg" + (graduated ? " grad" : "");
+
+  const exList = document.getElementById("ex-list");
+  exList.innerHTML = "";
+  (w.ex||[]).forEach((ex,i)=>{
+    const row = document.createElement("div");
+    row.className = "exline";
+    row.innerHTML = `<button class="miniplay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></button><div class="body"><div class="en">${ex.e}</div><div class="ja">${ex.t}</div></div>`;
+    row.querySelector("button").onclick = (e) => { e.stopPropagation(); speak(ex.e, "en"); };
+    exList.appendChild(row);
+  });
+  document.getElementById("r-syn").innerHTML = w.syn || "—";
+  document.getElementById("r-col").innerHTML = w.col || "—";
+  document.getElementById("r-note").textContent = w.n || "";
+
+  document.getElementById("result").classList.add("show");
+
+  const picked = (w.ex||[])[session._pickedEx];
+  speakSeq([
+    {text: opt.ok ? (graduated ? "Graduated!" : "Correct") : "Incorrect"},
+    picked ? {text: picked.e} : null
+  ].filter(Boolean));
+
+  saveState();
+  setTimeout(()=>{ document.addEventListener("click", vocabAdvance, true); }, 400);
+}
+
+function vocabAdvance(e){
+  const skip = e.target.closest("button, .toggle, .settings select, .tabs button");
+  if(skip) return;
+  if(currentTab !== "vocab") return;
+  e.preventDefault(); e.stopPropagation();
+  document.removeEventListener("click", vocabAdvance, true);
+  if(synth) synth.cancel();
+  renderVocab();
+}
+
+document.getElementById("voice").onchange = (e) => { state.settings.voice = e.target.checked; if(!e.target.checked && synth) synth.cancel(); saveState(); };
+document.getElementById("rate").onchange = (e) => { state.settings.rate = parseFloat(e.target.value); saveState(); };
+document.getElementById("reset-vocab").onclick = async () => {
+  if(!confirm("単語学習の記録をすべて削除します。よろしいですか？")) return;
+  state.vocab = { day:1, streak:{}, grad:{}, weakHist:{}, book:{} };
+  saveState(); renderVocab();
+};
+document.getElementById("replay").onclick = (e) => { e.stopPropagation(); if(session.currentWord) speak(session.currentWord.w, "en"); };
+
+/* ========== 文法問題 (Part5) ========== */
+let q5Timer = null, q5Answered = false;
+function startQ5Timer(){
+  clearInterval(q5Timer);
+  const start = Date.now();
+  const t = document.getElementById("q5-timer");
+  t.classList.remove("warn"); t.textContent = "0s";
+  q5Timer = setInterval(()=>{
+    const s = Math.floor((Date.now() - start)/1000);
+    t.textContent = `${s}s`;
+    if(s >= 20) t.classList.add("warn");
+  }, 250);
+}
+
+function renderGrammar(){
+  updateGrammarScore();
+  const i = state.grammar.idx;
+  const q = GRAMMAR[i];
+  if(!q) return;
+  q5Answered = !!state.grammar.answered[i];
+  document.getElementById("q5-no").textContent = `Q ${i+1} / ${GRAMMAR.length}`;
+
+  // ___ をスタイル付きspanに置換
+  const sentence = q.q.replace("___", `<span class="blank">___</span>`);
+  document.getElementById("q5-sentence").innerHTML = sentence;
+
+  const opts = document.getElementById("q5-opts");
+  opts.innerHTML = "";
+  const idxLabels = ["A","B","C","D"];
+  q.o.forEach((opt, idx) => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.innerHTML = `<span class="idx">${idxLabels[idx]}</span><span>${opt}</span>`;
+    b.onclick = () => answerGrammar(idx);
+    if(q5Answered){
+      b.disabled = true;
+      if(idx === q.a) b.classList.add("correct");
+      if(state.grammar.answered[i] === idx && idx !== q.a) b.classList.add("wrong");
+    }
+    opts.appendChild(b);
+  });
+
+  const exp = document.getElementById("q5-explain");
+  if(q5Answered){
+    document.getElementById("q5-explain-body").innerHTML = `<b>${q.cat}</b> ｜ ${q.exp}`;
+    exp.classList.add("show");
+  } else {
+    exp.classList.remove("show");
+    startQ5Timer();
+  }
+  document.getElementById("q5-prev").disabled = (i === 0);
+  document.getElementById("q5-next").disabled = (i === GRAMMAR.length - 1);
+}
+
+function answerGrammar(idx){
+  if(q5Answered) return;
+  q5Answered = true;
+  clearInterval(q5Timer);
+  const i = state.grammar.idx;
+  const q = GRAMMAR[i];
+  state.grammar.answered[i] = idx;
+  if(idx === q.a) state.grammar.correct[i] = true;
+  else delete state.grammar.correct[i];
+
+  document.querySelectorAll("#q5-opts .opt").forEach((b, j) => {
+    b.disabled = true;
+    if(j === q.a) b.classList.add("correct");
+    if(j === idx && j !== q.a) b.classList.add("wrong");
+  });
+
+  document.getElementById("q5-explain-body").innerHTML = `<b>${q.cat}</b> ｜ ${q.exp}`;
+  document.getElementById("q5-explain").classList.add("show");
+
+  updateGrammarScore();
+  saveState();
+}
+
+function updateGrammarScore(){
+  const total = Object.keys(state.grammar.answered).length;
+  const correct = Object.values(state.grammar.correct).filter(v => v).length;
+  document.getElementById("g-total").textContent = total;
+  document.getElementById("g-correct").textContent = correct;
+  document.getElementById("g-acc").textContent = total ? Math.round(100*correct/total) + "%" : "—";
+  document.getElementById("g-weak").textContent = total - correct;
+}
+
+document.getElementById("q5-prev").onclick = () => { if(state.grammar.idx > 0){ state.grammar.idx--; saveState(); renderGrammar(); } };
+document.getElementById("q5-next").onclick = () => { if(state.grammar.idx < GRAMMAR.length - 1){ state.grammar.idx++; saveState(); renderGrammar(); } };
+
+/* ========== リスニング (Part2形式) ========== */
+let lAnswered = false;
+function renderListen(){
+  updateListenScore();
+  const i = state.listen.idx;
+  const q = LISTEN[i];
+  if(!q) return;
+  session.currentLQ = q;
+  lAnswered = !!state.listen.answered[i];
+
+  document.getElementById("l-no").textContent = `Q ${i+1} / ${LISTEN.length}`;
+  document.getElementById("l-result").classList.remove("show");
+  document.getElementById("l-script").classList.remove("show");
+  document.getElementById("l-script-btn").textContent = "📜 スクリプトを表示";
+
+  const ch = document.getElementById("l-choices");
+  ch.innerHTML = "";
+  const idxLabels = ["A","B","C"];
+  q.o.forEach((opt, idx) => {
+    const b = document.createElement("button");
+    b.className = "choice";
+    b.innerHTML = `<span class="idx">${idxLabels[idx]}</span><span>${opt}</span>`;
+    b.onclick = (e) => { e.stopPropagation(); answerListen(idx); };
+    ch.appendChild(b);
+  });
+}
+
+async function playListenQuestion(){
+  if(!session.currentLQ) return;
+  const q = session.currentLQ;
+  synth?.cancel();
+  await new Promise(r => setTimeout(r, 100));
+  // 質問読み上げ
+  await speak(q.q, "en");
+  await new Promise(r => setTimeout(r, 400));
+  // 選択肢A・B・C を読み上げ
+  for(let i=0; i<q.o.length; i++){
+    await speak(`${["A","B","C"][i]}. ${q.o[i]}`, "en");
+    await new Promise(r => setTimeout(r, 300));
+  }
+}
+
+function answerListen(idx){
+  if(lAnswered) return;
+  lAnswered = true;
+  const i = state.listen.idx;
+  const q = LISTEN[i];
+  state.listen.answered[i] = idx;
+  if(idx === q.a) state.listen.correct[i] = true;
+  else delete state.listen.correct[i];
+
+  document.querySelectorAll("#l-choices .choice").forEach((b, j) => {
+    b.disabled = true;
+    if(j === q.a) b.classList.add("correct");
+    if(j === idx && j !== q.a) b.classList.add("wrong");
+  });
+
+  document.getElementById("l-verdict").className = "verdict " + (idx === q.a ? "ok" : "ng");
+  document.getElementById("l-verdict-text").textContent = idx === q.a ? "✓ Correct" : "✗ Incorrect";
+
+  // スクリプト
+  let scriptHtml = `<div class="en">Q: ${q.q}</div>`;
+  q.o.forEach((o,j) => scriptHtml += `<div class="en" style="margin-top:4px">${["A","B","C"][j]}: ${o}${j===q.a?' ✓':''}</div>`);
+  document.getElementById("l-script").innerHTML = scriptHtml;
+
+  document.getElementById("l-explain").innerHTML = q.exp;
+  document.getElementById("l-result").classList.add("show");
+  updateListenScore();
+  saveState();
+  setTimeout(()=>{ document.addEventListener("click", listenAdvance, true); }, 400);
+}
+
+function listenAdvance(e){
+  const skip = e.target.closest("button, .tabs button");
+  if(skip) return;
+  if(currentTab !== "listen") return;
+  e.preventDefault(); e.stopPropagation();
+  document.removeEventListener("click", listenAdvance, true);
+  synth?.cancel();
+  if(state.listen.idx < LISTEN.length - 1){
+    state.listen.idx++;
+    saveState();
+    renderListen();
+  }
+}
+
+function updateListenScore(){
+  const total = Object.keys(state.listen.answered).length;
+  const correct = Object.values(state.listen.correct).filter(v => v).length;
+  document.getElementById("l-total").textContent = total;
+  document.getElementById("l-correct").textContent = correct;
+  document.getElementById("l-acc").textContent = total ? Math.round(100*correct/total) + "%" : "—";
+}
+
+document.getElementById("l-play").onclick = playListenQuestion;
+document.getElementById("l-replay").onclick = playListenQuestion;
+document.getElementById("l-script-btn").onclick = () => {
+  const s = document.getElementById("l-script");
+  s.classList.toggle("show");
+  document.getElementById("l-script-btn").textContent = s.classList.contains("show") ? "📜 スクリプトを隠す" : "📜 スクリプトを表示";
+};
+
+/* ========== 起動 ========== */
+document.getElementById("startBtn").onclick = async () => {
+  unlockAudio();
+  document.getElementById("primer").classList.add("hidden");
+  document.getElementById("voice").checked = state.settings.voice;
+  document.getElementById("rate").value = String(state.settings.rate);
+  renderRoadmap();
+};
+
+(async () => { await loadState(); renderRoadmap(); })();
+</script>
+</body>
+</html>
